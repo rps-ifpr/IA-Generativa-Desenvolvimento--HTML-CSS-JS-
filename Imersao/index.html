@@ -1,27 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <title>Olimpíadas</title>
-</head>
+    <title>Calculadora Laranja e Preto</title>
+    <style>
+        body {
+            background-color: #333; /* Preto */
+            color: #fff; /* Branco */
+            font-family: Arial, sans-serif;
+        }
 
+        header {
+            background-color: #FF8C00; /* Laranja */
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 36px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            background-color: #444; /* Preto escuro */
+            color: #FF8C00; /* Laranja */
+            border: none;
+            padding: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555; /* Preto mais escuro */
+        }
+
+        #display {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 24px;
+            text-align: right;
+            border: none;
+            border-radius: 10px;
+            background-color: #fff; /* Branco */
+        }
+
+        #display:focus {
+            outline: none;
+        }
+    </style>
+</head>
 <body>
     <header>
-        <h1>Atletas do Brasil</h1>
+        <h1>Calculadora Laranja e Preto</h1>
     </header>
     <main>
         <section>
-            <input type="text" placeholder="Digite o nome do atleta">
-            <button>Pesquisar</button>
+            <input type="text" id="display" readonly>
+            <div class="buttons">
+                <button id="clear">C</button>
+                <button id="backspace">←</button>
+                <button id="divide">÷</button>
+                <button id="multiply">×</button>
+                <button id="seven">7</button>
+                <button id="eight">8</button>
+                <button id="nine">9</button>
+                <button id="subtract">-</button>
+                <button id="four">4</button>
+                <button id="five">5</button>
+                <button id="six">6</button>
+                <button id="add">+</button>
+                <button id="one">1</button>
+                <button id="two">2</button>
+                <button id="three">3</button>
+                <button id="equals">=</button>
+                <button id="zero">0</button>
+                <button id="decimal">.</button>
+            </div>
         </section>
     </main>
     <footer>
-        <p>2024 - Atletas do Brasil. Todos os direitos reservados</p>
-        <p>Entre em contato pelo email: guilherme@atletas.com.br</p>
+        <p>&copy; 2023 Calculadora Laranja e Preto</p>
     </footer>
-</body>
+    <script>
+        let display = document.getElementById("display");
+        let buttons = document.querySelectorAll("button");
 
+        let calculation = "";
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                let value = e.target.id;
+
+                switch (value) {
+                    case "clear":
+                        calculation = "";
+                        display.value = "";
+                        break;
+                    case "backspace":
+                        calculation = calculation.slice(0, -1);
+                        display.value = calculation;
+                        break;
+                    case "divide":
+                    case "multiply":
+                    case "subtract":
+                    case "add":
+                        calculation += value;
+                        display.value = calculation;
+                        break;
+                    case "equals":
+                        try {
+                            let result = eval(calculation);
+                            display.value = result;
+                            calculation = result;
+                        } catch (error) {
+                            display.value = "Erro!";
+                            calculation = "";
+                        }
+                        break;
+                    default:
+                        calculation += value;
+                        display.value = calculation;
+                }
+            });
+        });
+    </script>
+</body>
 </html>
